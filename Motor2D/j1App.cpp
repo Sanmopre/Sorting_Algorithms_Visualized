@@ -12,6 +12,7 @@
 #include "j1Map.h"
 #include "j1App.h"
 #include "j1Array.h"
+#include "j1Algorithms.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -27,6 +28,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	array = new j1Array();
+	algo = new j1Algorithms();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -37,6 +39,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(scene);
 	AddModule(array);
+	AddModule(algo);
 
 	// render last to swap buffer
 	AddModule(render);
