@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2DynArray.h"
 
+struct SDL_Texture;
 
 class j1Array : public j1Module
 {
@@ -29,10 +30,20 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Draws each position
+	void Draw(int position, int size);
+
+	// Randomizes the array
+	void Random_Array();
+
+
 public:
 
-	p2DynArray<int*> array;
+	int main_array[450];
 
+private:
+
+	SDL_Texture* texture = nullptr;
 };
 
 #endif // __j1ARRAY_H__
