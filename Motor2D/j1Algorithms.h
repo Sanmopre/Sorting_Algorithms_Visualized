@@ -3,6 +3,15 @@
 
 #include "j1Module.h"
 
+
+enum Sorting_Algorithms {
+	BUBBLE_SORT,
+	NONE
+};
+
+
+
+
 class j1Algorithms: public j1Module
 {
 public:
@@ -27,8 +36,17 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool Is_Ordered(int y_array[450]);
+	
+	void Bubble_Sort(int x_array[450]);
+
+
+	void Select_Sort(Sorting_Algorithms s_type = Sorting_Algorithms::NONE);
+
 
 public:
+
+	Sorting_Algorithms type;
 
 };
 
