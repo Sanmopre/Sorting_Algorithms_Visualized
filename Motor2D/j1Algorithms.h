@@ -39,15 +39,24 @@ public:
 	bool Is_Ordered(int y_array[450]);
 	
 	void Bubble_Sort(int x_array[450]);
+	void Selection_Sort(int x_array[450]);
 
-
-	void Select_Sort(Sorting_Algorithms s_type = Sorting_Algorithms::NONE);
-
+	
 
 public:
+
 	bool bubble = false;
+	bool selection = false;
+
+
+
+
 	Sorting_Algorithms type;
 	int time = 0;
+
+	int working_line = 0;
+	int working_line_2 = 0;
+
 };
 
 #endif // __j1ALGORITHMS_H__

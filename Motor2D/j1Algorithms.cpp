@@ -40,15 +40,22 @@ bool j1Algorithms::Update(float dt)
 		bubble = true;
 	}
 
-	if(bubble == true && time%2)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
+		selection = true;
+	}
+
+	if(bubble == true)
 		Bubble_Sort(App->array->main_array);
+
+	if (selection == true)
+		Selection_Sort(App->array->main_array);
 
 	if (Is_Ordered(App->array->main_array)) {
 		bubble = false;
+		selection = false;
 	}
 
 
-	time++;
 	return true;
 }
 
@@ -77,6 +84,8 @@ void j1Algorithms::Bubble_Sort(int x_array[450])
 			if (x_array[i] > x_array[i + 1]) {
 				int k = x_array[i];
 
+				working_line = i;
+				working_line_2 = i + 1;
 				x_array[i] = x_array[i + 1];
 				x_array[i + 1] = k;
 			}
@@ -85,15 +94,25 @@ void j1Algorithms::Bubble_Sort(int x_array[450])
 	}
 }
 
-void j1Algorithms::Select_Sort(Sorting_Algorithms s_type )
+void j1Algorithms::Selection_Sort(int x_array[450])
 {
-	switch (s_type) {
-	case Sorting_Algorithms::BUBBLE_SORT:
-		Bubble_Sort(App->array->main_array);
-		break;
+		int i, j, min_idx;
+		if (!Is_Ordered(x_array)) {
+			for (i = 0; i < 450; i++)
+			{
+				min_idx = i;
+				for (j = i + 1; j < 450; j++)
+					if (x_array[j] < x_array[min_idx])
+						min_idx = j;
 
-	case Sorting_Algorithms::NONE:
-		break;
-	}
+				working_line = min_idx;
+				working_line_2 = i;
+
+				int k = x_array[min_idx];
+				x_array[min_idx] = x_array[i];
+				x_array[i] = k;
+			}
+		}
 }
+
 

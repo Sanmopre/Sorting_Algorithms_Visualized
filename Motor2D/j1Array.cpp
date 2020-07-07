@@ -3,6 +3,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "j1Algorithms.h"
 #include <stdlib.h>  
 #include "SDL/include/SDL.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
@@ -28,6 +29,8 @@ bool j1Array::Awake(pugi::xml_node& config)
 bool j1Array::Start()
 {
 	texture = App->tex->Load("textures/texture.png");
+	texture_2 = App->tex->Load("textures/texture_2.png");
+	texture_3 = App->tex->Load("textures/texture_3.png");
 	Random_Array();
 
 	return true;
@@ -62,8 +65,16 @@ bool j1Array::CleanUp()
 void j1Array::Draw(int position, int size)
 {
 	for (int i = 0; i < size; i++) {
-		App->render->Blit(texture, position * 2, 890 - i);
-	}
+		if (position == App->algo->working_line ) {
+			App->render->Blit(texture_2, position * 2, 890 - i);
+		}
+		else if (position == App->algo->working_line_2) {
+			App->render->Blit(texture_3, position * 2, 890 - i);
+		}
+		else{
+			App->render->Blit(texture, position * 2, 890 - i);
+		}
+		}
 }
 
 void j1Array::Random_Array()

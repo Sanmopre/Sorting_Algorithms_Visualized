@@ -44,6 +44,10 @@ public:
 private:
 
 	SDL_Texture* texture = nullptr;
+
+	SDL_Texture* texture_2 = nullptr;
+
+	SDL_Texture* texture_3 = nullptr;
 };
 
 #endif // __j1ARRAY_H__
