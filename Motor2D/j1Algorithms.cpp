@@ -37,9 +37,18 @@ bool j1Algorithms::Update(float dt)
 {
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
-		Bubble_Sort(App->array->main_array);
+		bubble = true;
 	}
 
+	if(bubble == true && time%2)
+		Bubble_Sort(App->array->main_array);
+
+	if (Is_Ordered(App->array->main_array)) {
+		bubble = false;
+	}
+
+
+	time++;
 	return true;
 }
 
@@ -62,7 +71,7 @@ bool j1Algorithms::Is_Ordered(int y_array[450])
 
 void j1Algorithms::Bubble_Sort(int x_array[450])
 {
-	while (!Is_Ordered(x_array)) {
+	if (!Is_Ordered(x_array)) {
 
 		for (int i = 0; i < 450; ++i) {
 			if (x_array[i] > x_array[i + 1]) {

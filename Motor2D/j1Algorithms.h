@@ -45,9 +45,9 @@ public:
 
 
 public:
-
+	bool bubble = false;
 	Sorting_Algorithms type;
-
+	int time = 0;
 };
 
 #endif // __j1ALGORITHMS_H__
