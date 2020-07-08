@@ -40,6 +40,8 @@ public:
 	
 	void Bubble_Sort(int x_array[450]);
 	void Selection_Sort(int x_array[450], int time);
+	void Insertion_Sort(int x_array[450], int time);
+
 
 	void Swap(int& x, int& y);
 
@@ -47,7 +49,7 @@ public:
 
 	bool bubble = false;
 	bool selection = false;
-
+	bool insertion = false;
 
 
 
