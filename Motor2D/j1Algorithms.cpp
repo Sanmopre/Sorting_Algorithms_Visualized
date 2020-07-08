@@ -47,15 +47,17 @@ bool j1Algorithms::Update(float dt)
 	if(bubble == true)
 		Bubble_Sort(App->array->main_array);
 
-	if (selection == true)
+	if (selection == true) {
 		Selection_Sort(App->array->main_array);
+		time = 0;
+	}
 
 	if (Is_Ordered(App->array->main_array)) {
 		bubble = false;
 		selection = false;
 	}
 
-
+	time++;
 	return true;
 }
 
@@ -80,17 +82,17 @@ void j1Algorithms::Bubble_Sort(int x_array[450])
 {
 	if (!Is_Ordered(x_array)) {
 
-		for (int i = 0; i < 450; ++i) {
-			if (x_array[i] > x_array[i + 1]) {
-				int k = x_array[i];
+			for (int i = 0; i < 450; ++i) {
+				if (x_array[i] > x_array[i + 1]) {
+					int k = x_array[i];
 
-				working_line = i;
-				working_line_2 = i + 1;
-				x_array[i] = x_array[i + 1];
-				x_array[i + 1] = k;
+					working_line = i;
+					working_line_2 = i + 1;
+					x_array[i] = x_array[i + 1];
+					x_array[i + 1] = k;
+				}
 			}
-		}
-
+		
 	}
 }
 
@@ -98,19 +100,21 @@ void j1Algorithms::Selection_Sort(int x_array[450])
 {
 		int i, j, min_idx;
 		if (!Is_Ordered(x_array)) {
-			for (i = 0; i < 450; i++)
-			{
-				min_idx = i;
-				for (j = i + 1; j < 450; j++)
-					if (x_array[j] < x_array[min_idx])
-						min_idx = j;
+			if (time % 2) {
+				for (i = 0; i < 450; i++)
+				{
+					min_idx = i;
+					for (j = i + 1; j < 450; j++)
+						if (x_array[j] < x_array[min_idx])
+							min_idx = j;
 
-				working_line = min_idx;
-				working_line_2 = i;
+					working_line = min_idx;
+					working_line_2 = i;
 
-				int k = x_array[min_idx];
-				x_array[min_idx] = x_array[i];
-				x_array[i] = k;
+					int k = x_array[min_idx];
+					x_array[min_idx] = x_array[i];
+					x_array[i] = k;
+				}
 			}
 		}
 }
