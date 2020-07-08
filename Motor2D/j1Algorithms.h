@@ -45,6 +45,10 @@ public:
 	void Heap_Sort(int x_array[450], int time);
 	void heapify(int arr[], int n, int i);
 
+	void Pancake_Sort(int x_array[450], int time);
+	void flip(int arr[], int i);
+	int findMax(int arr[], int n);
+
 	void Swap(int& x, int& y);
 
 public:
@@ -53,6 +57,7 @@ public:
 	bool selection = false;
 	bool insertion = false;
 	bool heap = false;
+	bool pancake = false;
 
 
 	Sorting_Algorithms type;

@@ -41,6 +41,7 @@ bool j1Algorithms::Update(float dt)
 		selection = false;
 		insertion = false;
 		heap = false;
+		pancake = false;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
@@ -49,6 +50,7 @@ bool j1Algorithms::Update(float dt)
 		bubble = false;
 		insertion = false;
 		heap = false;
+		pancake = false;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
@@ -57,6 +59,7 @@ bool j1Algorithms::Update(float dt)
 		bubble = false;
 		insertion = true;
 		heap = false;
+		pancake = false;
 	}
 
 
@@ -66,6 +69,16 @@ bool j1Algorithms::Update(float dt)
 		bubble = false;
 		insertion = false;
 		heap = true;
+		pancake = false;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
+		time = 450;
+		selection = false;
+		bubble = false;
+		insertion = false;
+		heap = false;
+		pancake = true;
 	}
 
 
@@ -81,8 +94,11 @@ bool j1Algorithms::Update(float dt)
 	}
 
 	if (heap == true) {
-		if(!Is_Ordered(App->array->main_array))
 		Heap_Sort(App->array->main_array, time);
+	}
+
+	if (pancake  == true) {
+		Pancake_Sort(App->array->main_array, time);
 	}
 
 	if (Is_Ordered(App->array->main_array)) {
@@ -90,9 +106,10 @@ bool j1Algorithms::Update(float dt)
 		selection = false;
 		insertion = false;
 		heap = false;
+		pancake = false;
 	}
 
-	if (heap == true)
+	if (heap == true || pancake == true)
 		time--;
 	else
 	time++;
@@ -174,43 +191,78 @@ void j1Algorithms::Insertion_Sort(int x_array[450], int time)
 
 void j1Algorithms::Heap_Sort(int x_array[450], int time)
 {
-	// Build heap (rearrange array) 
+
 	if(time/2 - 1 >= 0)
 		heapify(x_array, 450, time/2 - 1);
 
-	// One by one extract an element from heap 
 	if(time - 1 > 0)
 	{
-		// Move current root to end 
 		Swap(x_array[0], x_array[time - 1]);
-
-		// call max heapify on the reduced heap 
 		heapify(x_array, time - 1, 0);
 	}
 }
 
 void j1Algorithms::heapify(int arr[], int n, int i)
 {
-	int largest = i; // Initialize largest as root 
-	int l = 2 * i + 1; // left = 2*i + 1 
-	int r = 2 * i + 2; // right = 2*i + 2 
+	int largest = i;  
+	int l = 2 * i + 1; 
+	int r = 2 * i + 2; 
 
-	// If left child is larger than root 
+ 
 	if (l < n && arr[l] > arr[largest])
 		largest = l;
 
-	// If right child is larger than largest so far 
+
 	if (r < n && arr[r] > arr[largest])
 		largest = r;
 
-	// If largest is not root 
+
 	if (largest != i)
 	{
 		Swap(arr[i], arr[largest]);
-
-		// Recursively heapify the affected sub-tree 
 		heapify(arr, n, largest);
 	}
+}
+
+void j1Algorithms::Pancake_Sort(int x_array[450], int time)
+{
+	if (time > 1)
+	{
+
+		int mi = findMax(x_array, time);
+
+
+		if (mi != time - 1)
+		{
+	 
+			flip(x_array, mi);
+
+	
+			flip(x_array, time - 1);
+		}
+	}
+}
+
+void j1Algorithms::flip(int arr[], int i)
+{
+	int temp, start = 0;
+	while (start < i)
+	{
+		temp = arr[start];
+		arr[start] = arr[i];
+		arr[i] = temp;
+		start++;
+		i--;
+	}
+}
+
+int j1Algorithms::findMax(int arr[], int n)
+{
+	int mi, i;
+	for (mi = 0, i = 0; i < n; ++i)
+		if (arr[i] > arr[mi])
+			mi = i;
+	return mi;
 }
 
 void j1Algorithms::Swap(int& x, int& y)
