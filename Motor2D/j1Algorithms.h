@@ -39,9 +39,9 @@ public:
 	bool Is_Ordered(int y_array[450]);
 	
 	void Bubble_Sort(int x_array[450]);
-	void Selection_Sort(int x_array[450]);
+	void Selection_Sort(int x_array[450], int time);
 
-	
+	void Swap(int& x, int& y);
 
 public:
 

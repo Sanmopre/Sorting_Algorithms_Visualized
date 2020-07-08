@@ -38,18 +38,20 @@ bool j1Algorithms::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		bubble = true;
+		selection = false;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
+		time = 0;
 		selection = true;
+		bubble = false;
 	}
 
 	if(bubble == true)
 		Bubble_Sort(App->array->main_array);
 
-	if (selection == true) {
-		Selection_Sort(App->array->main_array);
-		time = 0;
+	if (selection == true) {	
+		Selection_Sort(App->array->main_array, time);
 	}
 
 	if (Is_Ordered(App->array->main_array)) {
@@ -85,38 +87,41 @@ void j1Algorithms::Bubble_Sort(int x_array[450])
 			for (int i = 0; i < 450; ++i) {
 				if (x_array[i] > x_array[i + 1]) {
 					int k = x_array[i];
-
 					working_line = i;
 					working_line_2 = i + 1;
-					x_array[i] = x_array[i + 1];
-					x_array[i + 1] = k;
+					Swap(x_array[i], x_array[i + 1]);
 				}
 			}
 		
 	}
 }
 
-void j1Algorithms::Selection_Sort(int x_array[450])
+void j1Algorithms::Selection_Sort(int x_array[450], int time)
 {
-		int i, j, min_idx;
-		if (!Is_Ordered(x_array)) {
-			if (time % 2) {
-				for (i = 0; i < 450; i++)
+		int  j, min_idx;
+
+				if(time < 450) 
 				{
-					min_idx = i;
-					for (j = i + 1; j < 450; j++)
+					min_idx = time;
+					for (j = time + 1; j < 450; j++)
 						if (x_array[j] < x_array[min_idx])
 							min_idx = j;
 
 					working_line = min_idx;
-					working_line_2 = i;
+					working_line_2 = time;
 
 					int k = x_array[min_idx];
-					x_array[min_idx] = x_array[i];
-					x_array[i] = k;
+					x_array[min_idx] = x_array[time];
+					x_array[time] = k;
 				}
-			}
-		}
+			
+}
+
+void j1Algorithms::Swap(int& x, int& y)
+{
+		int temp = x;
+		x = y;
+		y = temp;
 }
 
 
