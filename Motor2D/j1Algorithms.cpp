@@ -60,7 +60,7 @@ bool j1Algorithms::Update(float dt)
 		Bubble_Sort(App->array->main_array);
 
 	if (selection == true) {	
-		Selection_Sort(App->array->main_array, time);
+		Heap_Sort(App->array->main_array, time);
 	}
 
 	if (insertion == true) {
@@ -146,6 +146,42 @@ void j1Algorithms::Insertion_Sort(int x_array[450], int time)
 			j = j - 1;
 		}
 		x_array[j + 1] = key;
+	}
+}
+
+void j1Algorithms::Heap_Sort(int x_array[450], int time)
+{
+	// Build heap (rearrange array) 
+	for (int i = 450 / 2 - 1; i >= 0; i--)
+		heapify(x_array, 450, i);
+
+	// One by one extract an element from heap 
+	for (int i = 450 - 1; i > 0; i--)
+	{
+		// Move current root to end 
+		Swap(x_array[0], x_array[i]);
+
+		// call max heapify on the reduced heap 
+		heapify(x_array, i, 0);
+	}
+}
+
+void j1Algorithms::heapify(int arr[], int n, int i)
+{
+	int largest = i; 
+	int l = 2 * i + 1;  
+	int r = 2 * i + 2; 
+
+	if (l < n && arr[l] > arr[largest])
+		largest = l;
+
+	if (r < n && arr[r] > arr[largest])
+		largest = r;
+
+	if (largest != i)
+	{
+		Swap(arr[i], arr[largest]);
+		heapify(arr, n, largest);
 	}
 }
 

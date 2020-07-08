@@ -42,6 +42,8 @@ public:
 	void Selection_Sort(int x_array[450], int time);
 	void Insertion_Sort(int x_array[450], int time);
 
+	void Heap_Sort(int x_array[450], int time);
+	void heapify(int arr[], int n, int i);
 
 	void Swap(int& x, int& y);
 
