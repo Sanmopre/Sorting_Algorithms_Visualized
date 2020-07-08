@@ -52,7 +52,7 @@ public:
 	bool bubble = false;
 	bool selection = false;
 	bool insertion = false;
-
+	bool heap = false;
 
 
 	Sorting_Algorithms type;

@@ -40,6 +40,7 @@ bool j1Algorithms::Update(float dt)
 		bubble = true;
 		selection = false;
 		insertion = false;
+		heap = false;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
@@ -47,6 +48,7 @@ bool j1Algorithms::Update(float dt)
 		selection = true;
 		bubble = false;
 		insertion = false;
+		heap = false;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
@@ -54,26 +56,47 @@ bool j1Algorithms::Update(float dt)
 		selection = false;
 		bubble = false;
 		insertion = true;
+		heap = false;
 	}
+
+
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
+		time = 450;
+		selection = false;
+		bubble = false;
+		insertion = false;
+		heap = true;
+	}
+
 
 	if(bubble == true)
 		Bubble_Sort(App->array->main_array);
 
 	if (selection == true) {	
-		Heap_Sort(App->array->main_array, time);
+		Selection_Sort(App->array->main_array, time);
 	}
 
 	if (insertion == true) {
 		Insertion_Sort(App->array->main_array, time);
 	}
 
+	if (heap == true) {
+		if(!Is_Ordered(App->array->main_array))
+		Heap_Sort(App->array->main_array, time);
+	}
+
 	if (Is_Ordered(App->array->main_array)) {
 		bubble = false;
 		selection = false;
 		insertion = false;
+		heap = false;
 	}
 
+	if (heap == true)
+		time--;
+	else
 	time++;
+
 	return true;
 }
 
@@ -152,35 +175,40 @@ void j1Algorithms::Insertion_Sort(int x_array[450], int time)
 void j1Algorithms::Heap_Sort(int x_array[450], int time)
 {
 	// Build heap (rearrange array) 
-	for (int i = 450 / 2 - 1; i >= 0; i--)
-		heapify(x_array, 450, i);
+	if(time/2 - 1 >= 0)
+		heapify(x_array, 450, time/2 - 1);
 
 	// One by one extract an element from heap 
-	for (int i = 450 - 1; i > 0; i--)
+	if(time - 1 > 0)
 	{
 		// Move current root to end 
-		Swap(x_array[0], x_array[i]);
+		Swap(x_array[0], x_array[time - 1]);
 
 		// call max heapify on the reduced heap 
-		heapify(x_array, i, 0);
+		heapify(x_array, time - 1, 0);
 	}
 }
 
 void j1Algorithms::heapify(int arr[], int n, int i)
 {
-	int largest = i; 
-	int l = 2 * i + 1;  
-	int r = 2 * i + 2; 
+	int largest = i; // Initialize largest as root 
+	int l = 2 * i + 1; // left = 2*i + 1 
+	int r = 2 * i + 2; // right = 2*i + 2 
 
+	// If left child is larger than root 
 	if (l < n && arr[l] > arr[largest])
 		largest = l;
 
+	// If right child is larger than largest so far 
 	if (r < n && arr[r] > arr[largest])
 		largest = r;
 
+	// If largest is not root 
 	if (largest != i)
 	{
 		Swap(arr[i], arr[largest]);
+
+		// Recursively heapify the affected sub-tree 
 		heapify(arr, n, largest);
 	}
 }
