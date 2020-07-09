@@ -46,6 +46,12 @@ bool j1Array::Update(float dt)
 {
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		App->algo->bubble = false;
+		App->algo->selection = false;
+		App->algo->insertion = false;
+		App->algo->heap = false;
+		App->algo->pancake = false;
+		App->algo->comb = false;
 		Random_Array();
 	}
 

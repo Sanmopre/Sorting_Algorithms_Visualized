@@ -42,6 +42,7 @@ bool j1Algorithms::Update(float dt)
 		insertion = false;
 		heap = false;
 		pancake = false;
+		comb = false;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
@@ -51,6 +52,7 @@ bool j1Algorithms::Update(float dt)
 		insertion = false;
 		heap = false;
 		pancake = false;
+		comb = false;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
@@ -60,6 +62,7 @@ bool j1Algorithms::Update(float dt)
 		insertion = true;
 		heap = false;
 		pancake = false;
+		comb = false;
 	}
 
 
@@ -69,6 +72,7 @@ bool j1Algorithms::Update(float dt)
 		bubble = false;
 		insertion = false;
 		heap = true;
+		comb = false;
 		pancake = false;
 	}
 
@@ -79,8 +83,18 @@ bool j1Algorithms::Update(float dt)
 		insertion = false;
 		heap = false;
 		pancake = true;
+		comb = false;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+		time = 450;
+		selection = false;
+		bubble = false;
+		insertion = false;
+		heap = false;
+		pancake = false;
+		comb = true;
+	}
 
 	if(bubble == true)
 		Bubble_Sort(App->array->main_array);
@@ -93,8 +107,18 @@ bool j1Algorithms::Update(float dt)
 		Insertion_Sort(App->array->main_array, time);
 	}
 
+	if (comb == true) {
+		Comb_Sort(App->array->main_array, time);
+		if (time >= 450) {
+			time = 0;
+		}
+	}
+
 	if (heap == true) {
 		Heap_Sort(App->array->main_array, time);
+		if (time <= 0) {
+			time = 450;
+		}
 	}
 
 	if (pancake  == true) {
@@ -107,6 +131,7 @@ bool j1Algorithms::Update(float dt)
 		insertion = false;
 		heap = false;
 		pancake = false;
+		comb = false;
 	}
 
 	if (heap == true || pancake == true)
@@ -198,6 +223,9 @@ void j1Algorithms::Heap_Sort(int x_array[450], int time)
 	if(time - 1 > 0)
 	{
 		Swap(x_array[0], x_array[time - 1]);
+		working_line = 0;
+		working_line_2 = time - 1;
+
 		heapify(x_array, time - 1, 0);
 	}
 }
@@ -239,6 +267,7 @@ void j1Algorithms::Pancake_Sort(int x_array[450], int time)
 
 	
 			flip(x_array, time - 1);
+
 		}
 	}
 }
@@ -251,6 +280,9 @@ void j1Algorithms::flip(int arr[], int i)
 		temp = arr[start];
 		arr[start] = arr[i];
 		arr[i] = temp;
+		working_line = start;
+		working_line_2 = i;
+
 		start++;
 		i--;
 	}
@@ -263,6 +295,41 @@ int j1Algorithms::findMax(int arr[], int n)
 		if (arr[i] > arr[mi])
 			mi = i;
 	return mi;
+}
+
+void j1Algorithms::Comb_Sort(int x_array[450], int time)
+{
+
+	int gap = 450;
+
+
+	bool swapped = true;
+
+	while (gap != 1 || swapped == true)
+	{
+		gap = getNextGap(gap);
+		swapped = false;
+		if(  time < 450 - gap)
+		{
+			if (x_array[time] > x_array[time + gap])
+			{
+				Swap(x_array[time], x_array[time + gap]);
+				working_line = time;
+				working_line_2 = time + gap;
+
+				swapped = true;
+			}
+		}
+	}
+}
+
+int j1Algorithms::getNextGap(int gap)
+{
+	gap = (gap * 10) / 13;
+
+	if (gap < 1)
+		return 1;
+	return gap;
 }
 
 void j1Algorithms::Swap(int& x, int& y)

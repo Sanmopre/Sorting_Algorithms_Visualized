@@ -49,6 +49,10 @@ public:
 	void flip(int arr[], int i);
 	int findMax(int arr[], int n);
 
+	void Comb_Sort(int x_array[450], int time);
+	int getNextGap(int gap);
+
+
 	void Swap(int& x, int& y);
 
 public:
@@ -58,7 +62,7 @@ public:
 	bool insertion = false;
 	bool heap = false;
 	bool pancake = false;
-
+	bool comb = false;
 
 	Sorting_Algorithms type;
 	int time = 0;
